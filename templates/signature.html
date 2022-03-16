@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="https://replit.com/public/icons/favicon-196.png" sizes="196x196" type="image/png"/>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+  </head>
+  <body>
+		<form>
+			<input type="text" value="{{content}}" class="content" onclick="this.setSelectionRange(0, this.value.length)" readonly>
+			<input type="text" value="{{signature}}" class="signature" onClick="this.setSelectionRange(0, this.value.length)" readonly>
+		</form>
+  </body>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+    * {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: min(4vw, 30px);
+    }
+		body {
+      width: 75%;
+      max-width: 800px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    h1 {
+      font-size: min(4.5vw, 35px);
+    }
+		form {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+		.content {
+			color: #616161;
+      border-radius: 13px 13px 0px 0px;
+      padding: 7%;
+      border: 0;
+      background-color: #fafafafa;
+		}
+		.signature {
+			color: #616161;
+      border-radius: 0px 0px 13px 13px;
+      padding: 7%;
+      border: 0;
+      background-color: #f5f5f5;
+		}
+    body {
+      width: 75%;
+      max-width: 800px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</html>

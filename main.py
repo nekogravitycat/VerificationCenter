@@ -2,6 +2,7 @@ import os
 import flask
 import threading
 import myCrypto
+import hashlib
 
 app = flask.Flask("")
 
@@ -26,6 +27,57 @@ def verify():
 		return "Vaild!"
 		
 	return "Invaild :("
+
+
+@app.route("/sign")
+def sign():
+	#Verify authority
+	token = flask.request.cookies.get("token")
+	if(token != os.environ["token"]):
+		return flask.render_template("login.html")
+		
+	return flask.render_template("sign.html")
+
+
+@app.route("/signature", methods=["POST"])
+def signature():
+	#Verify authority
+	token = flask.request.cookies.get("token")
+	if(token != os.environ["token"]):
+		return flask.render_template("login.html")
+		
+	content = flask.request.form["content"]
+	signature = myCrypto.sign(content, os.environ["private"])
+	return flask.render_template("signature.html", title="signature", content=content, signature=signature)
+
+
+
+@app.route("/login", methods = ["POST", "GET"])
+def login():
+	#For GET method
+	if(flask.request.method == "GET"):
+		token: str = flask.request.cookies.get("token")
+		
+		if(token != os.environ["token"]):
+			return flask.render_template("login.html")
+			
+		return flask.redirect("/sign")
+
+	#For POST method
+	token = flask.request.form["token"]
+	
+	if(token != "" or not token is None):
+		resp = flask.make_response(flask.redirect("/sign"))
+		sha: str = hashlib.sha256(token.encode()).hexdigest()
+		resp.set_cookie("token", sha)
+		return resp
+
+	return flask.redirect("/login?try-again=1")
+
+
+@app.route("/public-key")
+def show_public_key():
+	return os.environ["public"].replace("\n", "<br>")
 
 
 def run():
